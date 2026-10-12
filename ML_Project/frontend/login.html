@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | Wine Quality AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="wine-login-body">
+
+    <main class="wine-login-page">
+
+        <!-- Left side: vineyard background and branding -->
+        <section class="wine-hero">
+
+            <!-- KLH University branding -->
+            <div class="university-brand">
+                <img
+                    src="images/klh-logo.png"
+                    alt="KLH University logo"
+                    onerror="this.style.display='none'"
+                >
+
+                <div>
+                    <strong>KLH</strong>
+                    <span>UNIVERSITY</span>
+                </div>
+            </div>
+
+            <!-- Main hero content -->
+            <div class="hero-content">
+
+                <p class="hero-tag">
+                    MACHINE LEARNING PROJECT
+                </p>
+
+                <h1>
+                    Wine Quality<br>
+                    Prediction
+                </h1>
+
+                <p>
+                    Login to access your dashboard and explore
+                    wine quality predictions using machine learning.
+                </p>
+
+            </div>
+
+            <p class="hero-footer">
+                Feature Importance Analysis Using Random Forest
+            </p>
+
+        </section>
+
+        <!-- Right side: login form -->
+        <section class="wine-login-panel">
+
+            <div class="wine-login-card">
+
+                <h2>Welcome Back</h2>
+
+                <p class="login-description">
+                    Sign in to access your Wine Quality AI dashboard.
+                </p>
+
+                <!-- Login form -->
+                <form id="loginForm">
+
+                    <!-- Email field -->
+                    <div class="wine-field">
+
+                        <label for="email">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- Password field -->
+                    <div class="wine-field">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="password-wrapper">
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                id="togglePassword"
+                                class="password-toggle"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                            >◉</button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Login button -->
+                    <button
+                        type="submit"
+                        class="wine-login-button"
+                    >
+                        Login
+                    </button>
+
+                    <!-- Login status message -->
+                    <p
+                        id="loginMessage"
+                        class="message"
+                        role="status"
+                        aria-live="polite"
+                    ></p>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        // Get page elements
+        const loginForm = document.getElementById("loginForm");
+        const loginMessage = document.getElementById("loginMessage");
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        // Demo credentials for a local college project only
+        const demoEmail = "student@winequality.com";
+        const demoPassword = "Wine123";
+
+        // Show or hide password
+        togglePassword.addEventListener("click", function () {
+
+            const isHidden = passwordInput.type === "password";
+
+            passwordInput.type = isHidden ? "text" : "password";
+
+            togglePassword.setAttribute(
+                "aria-label",
+                isHidden ? "Hide password" : "Show password"
+            );
+
+            togglePassword.setAttribute(
+                "aria-pressed",
+                String(isHidden)
+            );
+
+        });
+
+        // Handle login form submission
+        loginForm.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            const email = document.getElementById("email")
+                .value.trim();
+
+            const password = passwordInput.value;
+
+            // Check demo credentials
+            if (
+                email === demoEmail &&
+                password === demoPassword
+            ) {
+
+                loginMessage.style.color = "green";
+
+                loginMessage.textContent =
+                    "Login successful! Opening dashboard...";
+
+                // Store demo login status for this browser tab
+                sessionStorage.setItem("wineLoggedIn", "true");
+
+                // Redirect to dashboard
+                setTimeout(function () {
+
+                    window.location.href = "index.html";
+
+                }, 700);
+
+            } else {
+
+                loginMessage.style.color = "#b00020";
+
+                loginMessage.textContent =
+                    "Incorrect email or password. Please try again.";
+
+            }
+
+        });
+    </script>
+
+</body>
+</html>

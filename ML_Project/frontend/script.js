@@ -1,307 +1,174 @@
-// ==================================================
-// WINE QUALITY PREDICTION
-// ==================================================
-
-
-// --------------------------------------------------
-// Prediction Function
-// --------------------------------------------------
-
-async function predictWine() {
-
-    // Get result and loading elements
-
-    const result = document.getElementById("result");
-
-    const loading = document.getElementById("loading");
-
-
-    // Clear previous result
-
-    result.style.display = "none";
-
-    result.innerHTML = "";
-
-
-    // Get input values
-
-    const fixedAcidity =
-        parseFloat(
-            document.getElementById("fixed_acidity").value
-        );
-
-
-    const volatileAcidity =
-        parseFloat(
-            document.getElementById("volatile_acidity").value
-        );
-
-
-    const citricAcid =
-        parseFloat(
-            document.getElementById("citric_acid").value
-        );
-
-
-    const residualSugar =
-        parseFloat(
-            document.getElementById("residual_sugar").value
-        );
-
-
-    const chlorides =
-        parseFloat(
-            document.getElementById("chlorides").value
-        );
-
-
-    const freeSulfurDioxide =
-        parseFloat(
-            document.getElementById("free_sulfur_dioxide").value
-        );
-
-
-    const totalSulfurDioxide =
-        parseFloat(
-            document.getElementById("total_sulfur_dioxide").value
-        );
-
-
-    const density =
-        parseFloat(
-            document.getElementById("density").value
-        );
-
-
-    const pH =
-        parseFloat(
-            document.getElementById("pH").value
-        );
-
-
-    const sulphates =
-        parseFloat(
-            document.getElementById("sulphates").value
-        );
-
-
-    const alcohol =
-        parseFloat(
-            document.getElementById("alcohol").value
-        );
-
-
-    // --------------------------------------------------
-    // Check whether all values are entered
-    // --------------------------------------------------
-
-    const values = [
-
-        fixedAcidity,
-        volatileAcidity,
-        citricAcid,
-        residualSugar,
-        chlorides,
-        freeSulfurDioxide,
-        totalSulfurDioxide,
-        density,
-        pH,
-        sulphates,
-        alcohol
-
-    ];
-
-
-    if (values.some(value => isNaN(value))) {
-
-        result.style.display = "block";
-
-        result.innerHTML = `
-            <h2>Please enter all 11 values.</h2>
-        `;
-
-        return;
-    }
-
-
-    // --------------------------------------------------
-    // Create JSON data
-    // --------------------------------------------------
-
-    const wineData = {
-
-        fixed_acidity: fixedAcidity,
-
-        volatile_acidity: volatileAcidity,
-
-        citric_acid: citricAcid,
-
-        residual_sugar: residualSugar,
-
-        chlorides: chlorides,
-
-        free_sulfur_dioxide: freeSulfurDioxide,
-
-        total_sulfur_dioxide: totalSulfurDioxide,
-
-        density: density,
-
-        pH: pH,
-
-        sulphates: sulphates,
-
-        alcohol: alcohol
-
-    };
-
-
-    // --------------------------------------------------
-    // Show loading
-    // --------------------------------------------------
-
-    loading.style.display = "block";
-
-
-    try {
-
-        // Send request to FastAPI
-
-        const response = await fetch(
-            "http://127.0.0.1:8000/predict",
-            {
-
-                method: "POST",
-
-                headers: {
-
-                    "Content-Type": "application/json"
-
-                },
-
-                body: JSON.stringify(wineData)
-
-            }
-        );
-
-
-        // Check response
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Server returned an error"
-            );
-
+// =====================================
+// 1. DEMO LOGIN
+// =====================================
+
+const loginForm = document.getElementById("loginForm");
+
+if (loginForm) {
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const message = document.getElementById("loginMessage");
+
+        const demoEmail = "student@winequality.com";
+        const demoPassword = "Wine123";
+
+        if (email === demoEmail && password === demoPassword) {
+            message.style.color = "green";
+            message.textContent =
+                "Login successful! Opening dashboard...";
+
+            setTimeout(function () {
+                window.location.href = "index.html";
+            }, 800);
+        } else {
+            message.style.color = "red";
+            message.textContent =
+                "Invalid email or password. Please try again.";
         }
-
-
-        // Convert response to JSON
-
-        const data = await response.json();
-
-
-        // Hide loading
-
-        loading.style.display = "none";
-
-
-        // Show prediction
-
-        result.style.display = "block";
-
-
-        result.innerHTML = `
-
-            <h2>Prediction Result</h2>
-
-            <div class="quality">
-
-                ${data.predicted_quality}
-
-            </div>
-
-            <div class="category">
-
-                ${data.category}
-
-            </div>
-
-            <p>
-                Predicted Wine Quality
-            </p>
-
-        `;
-
-
-    }
-
-    catch (error) {
-
-        // Hide loading
-
-        loading.style.display = "none";
-
-
-        // Show error
-
-        result.style.display = "block";
-
-
-        result.innerHTML = `
-
-            <h2>Prediction Failed</h2>
-
-            <p>
-                Unable to connect to the backend.
-            </p>
-
-            <p>
-                Please make sure FastAPI is running.
-            </p>
-
-        `;
-
-
-        console.error(error);
-
-    }
-
+    });
 }
 
 
-// --------------------------------------------------
-// Reset Function
-// --------------------------------------------------
+// =====================================
+// 2. WINE QUALITY PREDICTION
+// =====================================
 
-function resetForm() {
+const predictionForm = document.getElementById("predictionForm");
 
-    document.getElementById("fixed_acidity").value = "";
+if (predictionForm) {
+    predictionForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
 
-    document.getElementById("volatile_acidity").value = "";
+        const message = document.getElementById("predictionMessage");
+        const predictButton = document.getElementById("predictButton");
 
-    document.getElementById("citric_acid").value = "";
+        // Read all 11 input values.
+        const fieldNames = [
+            "fixed_acidity",
+            "volatile_acidity",
+            "citric_acid",
+            "residual_sugar",
+            "chlorides",
+            "free_sulfur_dioxide",
+            "total_sulfur_dioxide",
+            "density",
+            "pH",
+            "sulphates",
+            "alcohol"
+        ];
 
-    document.getElementById("residual_sugar").value = "";
+        const wineData = {};
 
-    document.getElementById("chlorides").value = "";
+        for (const field of fieldNames) {
+            const input = document.getElementById(field);
+            const value = input.value.trim();
 
-    document.getElementById("free_sulfur_dioxide").value = "";
+            if (value === "" || !Number.isFinite(Number(value))) {
+                message.style.color = "red";
+                message.textContent =
+                    "Please enter a valid number for every field.";
+                input.focus();
+                return;
+            }
 
-    document.getElementById("total_sulfur_dioxide").value = "";
+            wineData[field] = Number(value);
+        }
 
-    document.getElementById("density").value = "";
+        message.style.color = "#741b35";
+        message.textContent = "Predicting wine quality...";
 
-    document.getElementById("pH").value = "";
+        predictButton.disabled = true;
+        predictButton.textContent = "Please wait...";
 
-    document.getElementById("sulphates").value = "";
+        try {
+            const response = await fetch(
+                "http://127.0.0.1:8000/predict",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(wineData)
+                }
+            );
 
-    document.getElementById("alcohol").value = "";
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    result.detail
+                        ? JSON.stringify(result.detail)
+                        : "The prediction request failed."
+                );
+            }
+
+            if (result.predicted_quality === undefined) {
+                throw new Error(
+                    "The server did not return a predicted quality score."
+                );
+            }
+
+            // Save the latest result for results.html.
+            sessionStorage.setItem(
+                "winePrediction",
+                JSON.stringify(result)
+            );
+
+            // Save the submitted inputs as well.
+            sessionStorage.setItem(
+                "wineInput",
+                JSON.stringify(wineData)
+            );
+
+            message.style.color = "green";
+            message.textContent = "Prediction completed! Opening results...";
+
+            setTimeout(function () {
+                window.location.href = "results.html";
+            }, 500);
+
+        } catch (error) {
+            message.style.color = "red";
+            message.textContent =
+                "Could not get prediction: " + error.message +
+                " Make sure the FastAPI backend is running.";
+
+        } finally {
+            predictButton.disabled = false;
+            predictButton.textContent = "Predict Wine Quality";
+        }
+    });
+
+    // Clear the message when the form is reset.
+    predictionForm.addEventListener("reset", function () {
+        const message = document.getElementById("predictionMessage");
+
+        if (message) {
+            message.textContent = "";
+        }
+    });
+}
 
 
-    document.getElementById("result").style.display =
-        "none";
+// =====================================
+// 3. CONTACT FORM DEMO
+// =====================================
 
+const contactForm = document.getElementById("contactForm");
 
-    document.getElementById("result").innerHTML = "";
+if (contactForm) {
+    contactForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
+        const status = document.getElementById("contactStatus");
+
+        status.style.color = "#741b35";
+        status.textContent =
+            "Demo only: your message has not been sent to a server.";
+
+        contactForm.reset();
+    });
 }

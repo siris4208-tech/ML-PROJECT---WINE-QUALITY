@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About | Wine Quality AI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="main-nav">
+
+        <a href="index.html" class="nav-logo">
+            🍷 Wine Quality AI
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="prediction.html">Prediction</a>
+            <a href="results.html">Results</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="login.html">Logout</a>
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+        <!-- PAGE HEADING -->
+        <section class="page-heading">
+
+            <h1>About Our Project</h1>
+
+            <p>
+                Feature Importance Analysis for Wine Quality
+                Using Random Forest
+            </p>
+
+        </section>
+
+
+        <!-- PROJECT OVERVIEW -->
+        <section class="content-card">
+
+            <h2>Project Overview</h2>
+
+            <p>
+                This project uses Machine Learning to predict red wine
+                quality based on its chemical properties.
+            </p>
+
+            <p>
+                A Random Forest Classifier analyzes 11 input features,
+                including alcohol, acidity, density and sulphates.
+            </p>
+
+        </section>
+
+
+        <!-- PROJECT OBJECTIVES -->
+        <section class="content-card">
+
+            <h2>Project Objectives</h2>
+
+            <ul class="styled-list">
+                <li>Predict wine quality from chemical measurements.</li>
+                <li>Identify important features using Random Forest.</li>
+                <li>Build a user-friendly web application.</li>
+                <li>Connect the website to a Python machine learning API.</li>
+            </ul>
+
+        </section>
+
+
+        <!-- TECHNOLOGIES USED -->
+        <section class="content-card">
+
+            <h2>Technologies Used</h2>
+
+            <div class="stats-grid">
+
+                <article class="stat-card">
+                    <h3>Frontend</h3>
+                    <p>HTML, CSS and JavaScript</p>
+                </article>
+
+                <article class="stat-card">
+                    <h3>Backend</h3>
+                    <p>Python and FastAPI</p>
+                </article>
+
+                <article class="stat-card">
+                    <h3>Machine Learning</h3>
+                    <p>Scikit-learn and Random Forest</p>
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- DATASET INFORMATION -->
+        <section class="content-card">
+
+            <h2>Dataset Information</h2>
+
+            <p>
+                <strong>Dataset:</strong>
+                Red Wine Quality Dataset
+            </p>
+
+            <p>
+                <strong>Total samples:</strong> 1,599
+            </p>
+
+            <p>
+                <strong>Input features:</strong> 11
+            </p>
+
+            <p>
+                <strong>Model accuracy:</strong> 67.81% on the evaluated test set
+            </p>
+
+        </section>
+
+
+        <!-- FEATURE IMPORTANCE EXPLANATION -->
+        <section class="content-card">
+
+            <h2>Why Feature Importance?</h2>
+
+            <p>
+                Feature importance helps us understand which chemical
+                measurements were most useful to the trained model.
+                Alcohol, sulphates and volatile acidity were among
+                the leading features in our model.
+            </p>
+
+        </section>
+
+
+        <!-- GRAPH ANALYSIS SECTION -->
+        <section class="content-card" id="graph-analysis">
+
+            <div class="analysis-heading">
+
+                <p class="eyebrow">DATA VISUALIZATION</p>
+
+                <h2>Wine Quality Data Analysis</h2>
+
+                <p>
+                    Explore the distribution of wine quality scores,
+                    relationships between chemical properties,
+                    and the performance of our Random Forest model.
+                </p>
+
+            </div>
+
+
+            <div class="graphs-grid">
+
+
+                <!-- GRAPH 1: QUALITY DISTRIBUTION -->
+                <article class="graph-card">
+
+                    <h3>1. Distribution of Wine Quality</h3>
+
+                    <p>
+                        Shows the number of wine samples for each
+                        quality score in the dataset.
+                    </p>
+
+                    <img
+                        src="images/DistributionofWineQuality.png"
+                        alt="Bar chart showing the distribution of wine quality scores"
+                        loading="lazy"
+                    >
+
+                </article>
+
+
+                <!-- GRAPH 2: CORRELATION HEATMAP -->
+                <article class="graph-card">
+
+                    <h3>2. Correlation Heatmap</h3>
+
+                    <p>
+                        Shows the relationships between the chemical
+                        properties and wine quality.
+                    </p>
+
+                    <img
+                        src="images/CorrelationHeatmap.png"
+                        alt="Correlation heatmap of red wine chemical properties"
+                        loading="lazy"
+                    >
+
+                </article>
+
+
+                <!-- GRAPH 3: CONFUSION MATRIX -->
+                <article class="graph-card">
+
+                    <h3>3. Confusion Matrix</h3>
+
+                    <p>
+                        Compares actual wine quality scores with
+                        the quality scores predicted by the model.
+                    </p>
+
+                    <img
+                        src="images/Confusionmatrix.png"
+                        alt="Confusion matrix comparing actual and predicted wine quality"
+                        loading="lazy"
+                    >
+
+                </article>
+
+
+                <!-- GRAPH 4: RANDOM FOREST FEATURE IMPORTANCE -->
+                <article class="graph-card">
+
+                    <h3>4. Random Forest Feature Importance</h3>
+
+                    <p>
+                        Shows the relative importance of the 11
+                        chemical features in the trained model.
+                    </p>
+
+                    <img
+                        src="images/FeatureImportance.png"
+                        alt="Horizontal bar chart of Random Forest feature importance"
+                        loading="lazy"
+                    >
+
+                </article>
+
+
+                <!-- GRAPH 5: PERMUTATION IMPORTANCE -->
+                <article class="graph-card">
+
+                    <h3>5. Permutation Feature Importance</h3>
+
+                    <p>
+                        Shows how model performance changes when
+                        individual features are shuffled.
+                    </p>
+
+                    <img
+                        src="images/PermutationFeature.png"
+                        alt="Horizontal bar chart of permutation feature "
+                        loading="lazy"
+                    >
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+
+            <p>
+                Feature Importance Analysis for Wine Quality
+                Using Random Forest
+            </p>
+
+            <a href="index.html">← Back to Dashboard</a>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>
